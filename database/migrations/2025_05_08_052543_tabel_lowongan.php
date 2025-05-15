@@ -21,11 +21,9 @@ return new class extends Migration
             $table->foreignId('lokasi_id')->constrained('lokasi');
             $table->decimal('gaji', 10, 2);
             $table->string('gambar')->nullable(); // Menambahkan kolom untuk gambar
+            $table->foreignId('pengguna_id')->constrained('pengguna')->onDelete('cascade'); // Menambahkan kolom pengguna_id
             $table->timestamps();
         });
-        
-        
-        //
     }
 
     /**
@@ -33,8 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-       
-    Schema::dropIfExists('lowongan');
-   
+        Schema::dropIfExists('lowongan');
     }
 };
