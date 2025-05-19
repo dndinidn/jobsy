@@ -18,5 +18,17 @@ class Dashboard extends Controller
 {
     return view('job-detail');
 }
+    public function postJob()
+{
+    return view('post-job');
+}
+    public function jobSingle()
+{
+    return view('job-single');
+}
+    public function myApplications()
+{
+    return view('my-applications');
+}
     
 }
