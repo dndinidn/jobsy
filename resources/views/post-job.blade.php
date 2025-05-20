@@ -6,7 +6,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-7">
-        <h1 class="text-white font-weight-bold">Post A Job</h1>
+        <h1 class="text-white font-weight-bold">Posting Lowongan Kerja</h1>
       </div>
     </div>
   </div>
@@ -16,66 +16,61 @@
   <div class="container">
     <div class="row mb-5">
       <div class="col-lg-12">
-        <form class="p-4 p-md-5 border rounded" method="post">
-          <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
+        <form class="p-4 p-md-5 border rounded" method="POST" action="#">
+          @csrf
+
+          <h3 class="text-black mb-5 border-bottom pb-2">Detail Lowongan</h3>
 
           <div class="form-group">
-            <label>Upload Featured Image</label><br>
-            <label class="btn btn-primary btn-md btn-file">
-              Browse File<input type="file" hidden>
-            </label>
+            <label for="judul">Judul Pekerjaan</label>
+            <input type="text" class="form-control" id="judul" name="judul" placeholder="Contoh: Desainer Produk" required>
           </div>
 
           <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" placeholder="you@yourdomain.com">
+            <label for="lokasi">Lokasi</label>
+            <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Contoh: Jakarta" required>
           </div>
 
           <div class="form-group">
-            <label for="job-title">Job Title</label>
-            <input type="text" class="form-control" id="job-title" placeholder="Product Designer">
-          </div>
-
-          <div class="form-group">
-            <label for="job-location">Location</label>
-            <input type="text" class="form-control" id="job-location" placeholder="e.g. New York">
-          </div>
-
-          <div class="form-group">
-            <label for="job-type">Job Type</label>
-            <select class="form-control" id="job-type">
-              <option>Part Time</option>
-              <option>Full Time</option>
+            <label for="tipe_pekerjaan">Tipe Pekerjaan</label>
+            <select class="form-control" id="tipe_pekerjaan" name="tipe_pekerjaan" required>
+              <option value="">-- Pilih Tipe --</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Freelance">Freelance</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="job-description">Job Description</label>
-            <textarea class="form-control" id="job-description" rows="6" placeholder="Write job description here..."></textarea>
-          </div>
-
-          <h3 class="text-black my-5 border-bottom pb-2">Company Details</h3>
-
-          <div class="form-group">
-            <label for="company-name">Company Name</label>
-            <input type="text" class="form-control" id="company-name" placeholder="Company Name">
-          </div>
-
-          <div class="form-group">
-            <label for="company-website">Website</label>
-            <input type="text" class="form-control" id="company-website" placeholder="https://">
+            <label for="kategori_id">Kategori</label>
+            <select class="form-control" id="kategori_id" name="kategori_id" required>
+              <option value="">-- Pilih Kategori --</option>
+              @foreach($kategoris as $kategori)
+                <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+              @endforeach
+            </select>
           </div>
 
           <div class="form-group">
-            <label>Upload Logo</label><br>
-            <label class="btn btn-primary btn-md btn-file">
-              Browse File<input type="file" hidden>
-            </label>
+            <label for="gaji">Gaji</label>
+            <input type="text" class="form-control" id="gaji" name="gaji" placeholder="Contoh: Rp8.000.000 - Rp10.000.000" required>
+          </div>
+
+          <div class="form-group">
+            <label for="tanggal_diposting">Tanggal Diposting</label>
+            <input type="date" class="form-control" id="tanggal_diposting" name="tanggal_diposting" value="{{ date('Y-m-d') }}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="deskripsi">Deskripsi Pekerjaan</label>
+            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="6" placeholder="Tulis deskripsi pekerjaan di sini..." required></textarea>
           </div>
 
           <div class="form-group text-right">
-            <button type="submit" class="btn btn-primary btn-md">Save Job</button>
+            <button type="submit" class="btn btn-primary btn-md">Simpan Lowongan</button>
           </div>
+
         </form>
       </div>
     </div>

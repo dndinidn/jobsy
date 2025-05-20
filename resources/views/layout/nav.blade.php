@@ -1,7 +1,7 @@
 <header class="site-navbar mt-3">
   <div class="container-fluid">
     <div class="row align-items-center">
-      
+
       <!-- Logo -->
       <div class="site-logo col-6">
         <a href="{{ url('/beranda') }}">Jobsy</a>
@@ -27,7 +27,8 @@
           @endguest
 
           @auth
-            <!-- Optional: Bisa tampilkan nama user atau menu lain -->
+            <!-- Tampilkan link Profil dan Logout versi mobile -->
+            <li class="d-lg-none"><a href="{{ route('profil') }}">Profil Saya</a></li>
             <li class="d-lg-none">
               <form action="{{ route('logout') }}" method="POST" style="display:inline;">
                 @csrf
@@ -61,7 +62,10 @@
           @endguest
 
           @auth
-            <!-- Tombol Logout Desktop -->
+            <!-- Tombol Profil dan Logout Desktop -->
+            <a href="{{ route('profil') }}" class="btn btn-outline-primary border-width-2 ml-2">
+              <span class="mr-2 icon-user"></span>Profil Saya
+            </a>
             <form action="{{ route('logout') }}" method="POST" style="display:inline;">
               @csrf
               <button type="submit" class="btn btn-danger border-width-2 ml-2">

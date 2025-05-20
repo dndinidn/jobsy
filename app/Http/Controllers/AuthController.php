@@ -11,13 +11,13 @@ class AuthController extends Controller
     // Menampilkan form registrasi
    
    
-    public function tampilRegistrasi()
+    public function tampilRegistrasiUser()
     {
         return view('auth.registrasi-jobseeker');
     }
 
     // Memproses data registrasi
-    public function submitRegistrasiAdmin(Request $request)
+    public function submitRegistrasiUser(Request $request)
     {
         // Validasi input
         $request->validate([
@@ -33,7 +33,7 @@ class AuthController extends Controller
             $user->name     = $request->name;
             $user->email    = $request->email;
             $user->password = Hash::make($request->password); // Enkripsi password
-            $user->role     = 'admin';
+            $user->role     = 'user';
             $user->save();
 
             // Redirect ke halaman login setelah registrasi

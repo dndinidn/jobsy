@@ -12,14 +12,16 @@ Route::get('/', function () {
 
 // Halaman umum tanpa login
 Route::get('/beranda', [Dashboard::class, 'index'])->name('beranda');
+Route::get('/post-job', [Dashboard::class, 'PostJob'])->name('post');
 Route::get('/job-listings', [Dashboard::class, 'jobListings'])->name('joblistings');
 Route::get('/job-detail', [Dashboard::class, 'jobDetails'])->name('jobdetails');
 Route::get('/job-single', [Dashboard::class, 'jobSingle'])->middleware('auth')->name('jobSingle');
 Route::get('/my-applications', [Dashboard::class, 'myApplications'])->middleware(['auth', 'role:user'])->name('myApplications');
+Route::get('/profil', [Dashboard::class, 'Profil'])->name('profil');
 
 // Registrasi
-Route::get('registrasi-jobseeker', [AuthController::class, 'tampilRegistrasi'])->name('registrasi.jobseeker');
-Route::post('/registrasi/user', [AuthController::class, 'submitRegistrasi'])->name('registrasi.user');
+Route::get('registrasi-jobseeker', [AuthController::class, 'tampilRegistrasiUser'])->name('registrasi.jobseeker');
+Route::post('/registrasi/user', [AuthController::class, 'submitRegistrasiUser'])->name('registrasi.user');
 
 Route::get('registrasi-employer', [AuthController::class, 'tampilRegistrasiPerusahaan'])->name('registrasi.employer');
 Route::post('/registrasi/perusahaan', [AuthController::class, 'submitRegistrasiPerusahaan'])->name('registrasi.perusahaan');
@@ -30,7 +32,7 @@ Route::post('/login', [AuthController::class, 'submitLogin'])->name('login.submi
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Dashboard yang hanya bisa diakses setelah login
+
 Route::middleware('auth')->group(function () {
     Route::get('/job-listings', [Dashboard::class, 'jobListings'])->name('dashboard');
     // Kalau kamu mau bikin route khusus untuk dashboard perusahaan dan user, bisa ditambah di sini

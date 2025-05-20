@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Dashboard extends Controller
 {
@@ -10,6 +12,7 @@ class Dashboard extends Controller
 {
     return view('index');
 }
+   
     public function jobListings()
 {
     return view('job-listings');
@@ -18,10 +21,7 @@ class Dashboard extends Controller
 {
     return view('job-detail');
 }
-    public function postJob()
-{
-    return view('post-job');
-}
+   
     public function jobSingle()
 {
     return view('job-single');
@@ -30,5 +30,16 @@ class Dashboard extends Controller
 {
     return view('my-applications');
 }
+    public function Profil()
+{
+    $user=Auth::user();
+    return view('profil',compact('user'));
+}
+ public function PostJob()
+    {
+        // $matakuliah = Courses::all(); // Ambil semua data dari tabel post
+        $kategori = Kategori::all(); // Ambil semua mata kuliah dari tabel courses
+        return view('admin.tambah-kategori', compact('kategori'));
+    }
     
 }
