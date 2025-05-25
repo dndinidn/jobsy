@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PerusahaanController;
 
 // Halaman utama / welcome
 Route::get('/', function () {
@@ -51,3 +52,13 @@ Route::post('/simpan-kategori', [AdminController::class, 'simpanKategori'])->nam
  Route::get('admin/edit-kategori/{id}', [AdminController::class, 'editKategori'])->name('edit-kategori');
  Route::delete('/hapus-kategori/{id}', [AdminController::class, 'hapusKategori'])->name('hapus-kategori');
 Route::put('/update-kategori/{id}', [AdminController::class, 'updateKategori'])->name('update-kategori');
+
+//perusahaan
+Route::get('/dashboard-perusahaan', [PerusahaanController::class, 'DashboardPerusahaan'])->name('perusahaan.dashboard');
+Route::get('/lihat-profil-perusahaan', [PerusahaanController::class, 'LihatProfil'])->name('lihat');
+Route::get('/perusahaan/tambah-job', [PerusahaanController::class, 'TambahJob'])->name('tambah-job');
+Route::post('/simpan-job', [PerusahaanController::class, 'simpanJob'])->name('simpan-job');
+Route::get('/perusahaan/lihat-job', [PerusahaanController::class, 'lihatJob'])->name('lihat-job');
+Route::get('admin/edit-job/{id}', [PerusahaanController::class, 'editJob'])->name('edit-job');
+Route::delete('/hapus-job/{id}', [PerusahaanController::class, 'hapusJob'])->name('hapus-job');
+Route::put('/update-job/{id}', [PerusahaanController::class, 'updateJob'])->name('update-job');

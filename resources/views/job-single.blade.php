@@ -221,7 +221,7 @@
           <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
             <a href="job-single.html"></a>
             <div class="job-listing-logo">
-              <img src="images/job_logo_5.jpg" alt="Image" class="img-fluid">
+              <img src="{{ asset('assets/images/job_logo_5.jpg') }}" alt="Image" class="img-fluid">
             </div>
 
             <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">

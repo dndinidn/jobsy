@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         employerSeeder::class,
         jobSeekerSeeder::class,
         KategoriSeeder::class,
+        RegionsSeeder::class,
        
     ]);
         // Jika perlu membuat user lain (optional)

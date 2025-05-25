@@ -33,7 +33,8 @@ class AuthController extends Controller
             $user->name     = $request->name;
             $user->email    = $request->email;
             $user->password = Hash::make($request->password); // Enkripsi password
-            $user->role     = 'user';
+            $user->role     = 'user
+            ';
             $user->save();
 
             // Redirect ke halaman login setelah registrasi
@@ -103,7 +104,7 @@ public function submitLogin(Request $request)
 
         // Redirect berdasarkan role
         if ($user->role === 'perusahaan') {
-            return redirect()->intended('/job-detail');
+            return redirect()->intended('/dashboard-perusahaan');
         } elseif ($user->role === 'user') {
             return redirect()->intended('/beranda');
         }elseif ($user->role === 'admin') {

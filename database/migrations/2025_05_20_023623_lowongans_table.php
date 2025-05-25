@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('description'); // Deskripsi pekerjaan
 
             // Kategori pekerjaan dari tabel categories
-            $table->foreignId('kategori_id')->constrained()->onDelete('cascade');
+            // $table->foreignId('kategori_id')->constrained()->onDelete('cascade');
 
             $table->string('salary'); // Gaji
             $table->timestamp('posted_at')->useCurrent(); // Tanggal posting

@@ -16,5 +16,9 @@ class Kategori extends Model
         'nama_kategori',
         
     ];
+    public function lowongans()
+{
+    return $this->belongsToMany(Lowongan::class, 'category_lowongan', 'kategori_id', 'lowongan_id');
+}
     //
 }
