@@ -21,6 +21,43 @@ public function lihatKategori(){
     $kategori= Kategori::all();
     return view('admin.lihat-kategori',compact('kategori'));
 }
+
+public function LihatJobSeeker()
+{
+    $jobseekers = User::where('role', 'user')->paginate(10);
+    return view('admin.lihat-akun-jobseeker', compact('jobseekers'));
+}
+public function hapusJobseeker($id)
+    {
+        $jobseeker = User::findOrFail($id);
+            if ($jobseeker->role !== 'user') {
+            return redirect()->route('lihat.jobseeker')->with('error', 'User bukan jobseeker.');
+        }
+
+        // Hapus user
+        $jobseeker->delete();
+
+        // Redirect kembali ke daftar dengan pesan sukses
+        return redirect()->route('lihat.jobseeker')->with('success', 'Akun jobseeker berhasil dihapus.');
+    }
+public function LihatEmployer()
+{
+    $employers = User::where('role', 'perusahaan')->paginate(10);
+    return view('admin.lihat-akun-employer', compact('employers'));
+}
+public function hapusEmployer($id)
+    {
+        $employer = User::findOrFail($id);
+            if ( $employer->role !== 'perusahaan') {
+            return redirect()->route('lihat.employer')->with('error', 'User bukan  employer.');
+        }
+
+        // Hapus user
+        $employer->delete();
+
+        // Redirect kembali ke daftar dengan pesan sukses
+        return redirect()->route('lihat.employer')->with('success', 'Akun employer berhasil dihapus.');
+    }
 // public function edit($id)
 //     {
 //         $kategori = Kategori::findOrFail($id);

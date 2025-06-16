@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     // Menampilkan form registrasi
-   
-   
+
+
     public function tampilRegistrasiUser()
     {
         return view('auth.registrasi-jobseeker');
@@ -33,8 +33,7 @@ class AuthController extends Controller
             $user->name     = $request->name;
             $user->email    = $request->email;
             $user->password = Hash::make($request->password); // Enkripsi password
-            $user->role     = 'user
-            ';
+            $user->role     = 'user';
             $user->save();
 
             // Redirect ke halaman login setelah registrasi
@@ -46,7 +45,7 @@ class AuthController extends Controller
             ]);
         }
     }
-    
+
     public function tampilRegistrasiPerusahaan()
     {
         return view('auth.registrasi-employer');
@@ -81,7 +80,7 @@ class AuthController extends Controller
             ]);
         }
     }
-    
+
 public function tampilLogin()
 {
     return view('auth.login');
@@ -106,7 +105,7 @@ public function submitLogin(Request $request)
         if ($user->role === 'perusahaan') {
             return redirect()->intended('/dashboard-perusahaan');
         } elseif ($user->role === 'user') {
-            return redirect()->intended('/beranda');
+            return redirect()->intended('/');
         }elseif ($user->role === 'admin') {
             return redirect()->intended('/dashboard-admin');
         } else {

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Profil;
 use App\Http\Controllers\AuthController;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,8 +23,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'profile_picture',
     ];
-    
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -40,6 +42,7 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
     protected function casts(): array
     {
         return [
@@ -47,4 +50,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function lamarans()
+{
+    return $this->hasMany(Lamaran::class);
+}
+
+    public function profile()
+{
+    return $this->hasOne(Profile::class);
+}
+
 }

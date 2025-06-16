@@ -46,13 +46,18 @@
 
             <hr class="sidebar-divider">
 
-            <!-- Perusahaan -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-building"></i>
-                    <span>Perusahaan</span>
-                </a>
-            </li>
+         <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAkun" aria-expanded="true" aria-controls="collapseAkun">
+        <i class="fas fa-fw fa-tags"></i>
+        <span>Akun Pengguna</span>
+    </a>
+    <div id="collapseAkun" class="collapse" aria-labelledby="headingAkun" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{ route('lihat.jobseeker') }}">Job Seeker</a>
+            <a class="collapse-item" href="{{ route('lihat.employer') }}">Employer</a>
+        </div>
+    </div>
+</li>
 
            <!-- Kategori -->
 <li class="nav-item">
@@ -69,13 +74,6 @@
 </li>
 
 
-            <!-- Job Seeker -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Job Seeker</span>
-                </a>
-            </li>
 
             <hr class="sidebar-divider">
 

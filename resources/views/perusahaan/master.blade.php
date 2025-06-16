@@ -37,19 +37,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Kategori -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKategori" aria-expanded="true" aria-controls="collapseKategori">
-                    <i class="fas fa-fw fa-tags"></i>
-                    <span>Kategori</span>
-                </a>
-                <div id="collapseKategori" class="collapse" aria-labelledby="headingKategori" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('lihat-kategori') }}">Lihat Kategori</a>
-                        <a class="collapse-item" href="{{ route('tambah-kategori') }}">Tambah Kategori</a>
-                    </div>
-                </div>
-            </li>
+        
 
             <!-- Job -->
             <li class="nav-item">
@@ -61,7 +49,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('lihat-job') }}">Lihat Job</a>
                         <a class="collapse-item" href="{{ route('tambah-job') }}">Tambah Job</a>
-                        <a class="collapse-item" href="#">Status Pelamar</a>
+                        <a class="collapse-item" href="{{ route('perusahaan.status-job') }}">Status Pelamar</a>
                         <a class="collapse-item" href="#">Pelamar Diterima</a>
                     </div>
                 </div>
@@ -103,17 +91,18 @@
 
                         <!-- User Info -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                <img class="img-profile rounded-circle" src="{{ asset('assets-admin/img/undraw_profile_1.svg') }}">
+                                <img class="img-profile rounded-circle"
+                                     src="{{ Auth::user()->profile && Auth::user()->profile->profile_picture ? asset('storage/' . Auth::user()->profile->profile_picture) : asset('assets-admin/img/undraw_profile_1.svg') }}"
+                                     alt="Profile Picture">
                             </a>
-                           <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-    <a class="dropdown-item" href="/lihat-profil-perusahaan">
-        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-        Profil
-    </a>
-</div>
-
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{{ route('lihat.profil.perusahaan') }}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profil
+                                </a>
+                            </div>
                         </li>
                     </ul>
                 </nav>

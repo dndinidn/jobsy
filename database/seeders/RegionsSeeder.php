@@ -46,11 +46,11 @@ class RegionsSeeder extends Seeder
             ['name' => 'Kota Palopo'],
 
             // Jawa Barat
-            ['name' => 'Kabupaten Bandung'],
+           ['name' => 'Kabupaten Bandung'],
             ['name' => 'Kabupaten Bandung Barat'],
             ['name' => 'Kabupaten Bekasi'],
             ['name' => 'Kabupaten Bogor'],
-            ['name' => 'Kabupaten Ciamis'],
+            ['name' => 'Kabupaten Ciamis'], 
             ['name' => 'Kabupaten Cianjur'],
             ['name' => 'Kabupaten Cirebon'],
             ['name' => 'Kabupaten Garut'],

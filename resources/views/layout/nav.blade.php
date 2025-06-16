@@ -4,15 +4,15 @@
 
       <!-- Logo -->
       <div class="site-logo col-6">
-        <a href="{{ url('/beranda') }}">Jobsy</a>
+        <a href="{{ url('/') }}">Jobsy</a>
       </div>
 
       <!-- Navigasi Tengah -->
       <nav class="mx-auto site-navigation">
         <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-          <li><a href="{{ url('/beranda') }}" class="nav-link active">Home</a></li>
+          <li><a href="{{ url('/') }}" class="nav-link active">Home</a></li>
           <li><a href="{{ url('/job-listings') }}" class="nav-link active">Job Listing</a></li>
-          <li><a href="{{ url('/my-applications') }}" class="nav-link active">My Applications</a></li>
+          <li><a href="{{ route('lihat.lamaran') }}" class="nav-link active">My Applications</a></li>
 
           @guest
             <!-- Navigasi versi mobile (tampil hanya di layar kecil) -->
@@ -28,7 +28,7 @@
 
           @auth
             <!-- Tampilkan link Profil dan Logout versi mobile -->
-            <li class="d-lg-none"><a href="{{ route('profil') }}">Profil Saya</a></li>
+            <li class="d-lg-none"><a href="{{ route('lihat.profil.jobseeker') }}">Profil Saya</a></li>
             <li class="d-lg-none">
               <form action="{{ route('logout') }}" method="POST" style="display:inline;">
                 @csrf
@@ -63,7 +63,7 @@
 
           @auth
             <!-- Tombol Profil dan Logout Desktop -->
-            <a href="{{ route('profil') }}" class="btn btn-outline-primary border-width-2 ml-2">
+            <a href="{{ route('lihat.profil.jobseeker') }}" class="btn btn-outline-primary border-width-2 ml-2">
               <span class="mr-2 icon-user"></span>Profil Saya
             </a>
             <form action="{{ route('logout') }}" method="POST" style="display:inline;">

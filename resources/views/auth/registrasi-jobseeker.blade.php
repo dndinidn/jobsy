@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registrasi User</title>
+  <title>Registrasi Job Seeker</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
@@ -27,9 +27,7 @@
       z-index: 1;
     }
 
-    .section-hero .container,
-    .section-hero .row,
-    .section-hero .col-md-7 {
+    .section-hero .container, .section-hero .row, .section-hero .col-md-7 {
       position: relative;
       z-index: 2;
     }
@@ -60,14 +58,13 @@
       background-color: #1b5e20;
     }
 
-    .custom-breadcrumbs a,
-    .custom-breadcrumbs .slash {
+    .custom-breadcrumbs a {
       color: #fff;
+      text-decoration: underline;
     }
 
-    .form-wrapper {
-      display: flex;
-      justify-content: center;
+    .custom-breadcrumbs .slash {
+      color: #fff;
     }
   </style>
 </head>
@@ -91,9 +88,9 @@
 <!-- FORM Section -->
 <section class="site-section py-5">
   <div class="container">
-    <div class="row form-wrapper">
+    <div class="row">
       <div class="col-lg-6 mb-5">
-        <h2 class="mb-4">Form Registrasi</h2>
+        <h2 class="mb-4 text-success">Form Registrasi</h2>
 
         @if (session('success'))
           <div class="alert alert-success">
@@ -111,26 +108,26 @@
           </div>
         @endif
 
-        <form action="{{ url('registrasi/user') }}" method="post" class="p-4 border rounded bg-white">
+        <form action="{{ route('registrasi.user')}}" method="post" class="p-4 border rounded bg-white">
           @csrf
 
           <div class="mb-3">
-            <label for="name">Nama Lengkap</label>
+            <label class="text-success" for="name">Nama pengguna</label>
             <input type="text" name="name" id="name" class="form-control" placeholder="Nama Lengkap" required>
           </div>
 
           <div class="mb-3">
-            <label for="email">Email</label>
+            <label class="text-success" for="email">Email</label>
             <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required>
           </div>
 
           <div class="mb-3">
-            <label for="password">Password</label>
+            <label class="text-success" for="password">Password</label>
             <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
           </div>
 
           <div class="mb-3">
-            <label for="password_confirmation">Konfirmasi Password</label>
+            <label class="text-success" for="password_confirmation">Konfirmasi Password</label>
             <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Konfirmasi Password" required>
           </div>
 

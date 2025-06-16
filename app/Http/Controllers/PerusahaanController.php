@@ -1,22 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Models\Lowongan;
-use App\Models\Kategori;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Region;
+use App\Models\Lamaran;
+use App\Models\Kategori;
+use App\Models\Lowongan;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PerusahaanController extends Controller
 {
     public function DashboardPerusahaan()
     {
+
         return view('perusahaan.dashboard-perusahaan');
-    }
-    public function LihatProfil()
-    {
-        return view('perusahaan.lihat-profil');
     }
 
     public function lihatJob()
@@ -117,6 +115,39 @@ public function hapusJob($id)
     return redirect()->route('lihat-job')->with('success', 'Lowongan berhasil dihapus.');
 }
 
+    public function statusJob()
+    {
+        $userId = Auth::id();
 
+        // Ambil semua lowongan milik perusahaan
+        $lowonganIds = Lowongan::where('user_id', $userId)->pluck('id');
+
+        // Ambil lamaran yang terkait dengan lowongan perusahaan
+        $applications = Lamaran::whereIn('lowongan_id', $lowonganIds)
+                        ->with(['lowongan'])
+                        ->latest()
+                        ->get();
+
+        return view('perusahaan.status-job', compact('applications'));
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:menunggu,diterima,ditolak',
+        ]);
+
+        $lamaran = Lamaran::findOrFail($id);
+
+        // Pastikan lamaran milik lowongan perusahaan yang login
+        if ($lamaran->lowongan->user_id != Auth::id()) {
+            abort(403, 'Anda tidak memiliki akses untuk mengubah status lamaran ini.');
+        }
+
+        $lamaran->status = $request->status;
+        $lamaran->save();
+
+        return redirect()->back()->with('success', 'Status lamaran berhasil diperbarui.');
+    }
 
 }

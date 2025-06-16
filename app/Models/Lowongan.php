@@ -20,9 +20,13 @@ class Lowongan extends Model
         'employment_type',
         'description',
         'salary',
-       
+
         'posted_at',
     ];
+    public function location()
+{
+    return $this->belongsTo(Region::class, 'location_id');
+}
 public function kategoris()
 {
     return $this->belongsToMany(Kategori::class, 'category_lowongan', 'lowongan_id', 'kategori_id');
@@ -32,4 +36,9 @@ public function kategoris()
     {
         return $this->belongsTo(User::class);
     }
+    public function lamarans()
+{
+    return $this->hasMany(Lamaran::class);
+}
+
 }

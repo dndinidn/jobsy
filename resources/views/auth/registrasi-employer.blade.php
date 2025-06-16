@@ -108,12 +108,12 @@
           </div>
         @endif
 
-        <form action="{{ url('registrasi/perusahaan') }}" method="post" class="p-4 border rounded bg-white">
+        <form action="{{ route('registrasi.perusahaan') }}" method="post" class="p-4 border rounded bg-white">
           @csrf
 
           <div class="mb-3">
             <label class="text-success" for="name">Nama Perusahaan</label>
-            <input type="text" name="name" id="name" class="form-control" placeholder="Nama Lengkap" required>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Nama perusahaan" required>
           </div>
 
           <div class="mb-3">
