@@ -56,45 +56,102 @@ class Dashboard extends Controller
         return view('dashboard.lamaran', compact('job'));
     }
 
-    public function simpanLamaran(Request $request, $lowongan_id)
-    {
-        $request->validate([
-            'nama' => 'required',
-            'telepon' => 'required',
-            'cv' => 'required|file|mimes:pdf|max:2048',
+    // public function simpanLamaran(Request $request, $lowongan_id)
+    // {
+    //     $request->validate([
+    //         'nama' => 'required',
+    //         'telepon' => 'required',
+    //         'cv' => 'required|file|mimes:pdf|max:2048',
+    //     ]);
+
+    //     DB::beginTransaction();
+    //     try {
+    //         $cvPath = null;
+
+    //         if ($request->hasFile('cv')) {
+    //             $cv = $request->file('cv');
+    //             $cvPath = $cv->store('cv_lamaran', 'public');
+    //         }
+
+    //         Lamaran::create([
+    //             'lowongan_id' => $lowongan_id,
+    //             'user_id' => Auth::id(),
+    //             'nama' => $request->nama,
+    //             'telepon' => $request->telepon,
+    //             'cv_path' => $cvPath,
+    //         ]);
+
+    //         DB::commit();
+
+    //         return redirect()->route('lihat.lamaran')->with('success', 'Lamaran berhasil dikirim.');
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+
+    //         // Hapus file jika sudah sempat terupload
+    //         if (isset($cvPath)) {
+    //             Storage::disk('public')->delete($cvPath);
+    //         }
+
+    //         return back()->withErrors(['message' => 'Gagal mengirim lamaran: ' . $e->getMessage()]);
+    //     }
+    // }
+public function simpanLamaran(Request $request, $lowongan_id)
+{
+    $request->validate([
+        'nama' => 'required',
+        'telepon' => 'required',
+        'cv' => 'required|file|mimes:pdf|max:2048',
+    ]);
+
+    DB::beginTransaction();
+    try {
+        $cvPath = null;
+
+        if ($request->hasFile('cv')) {
+            $cv = $request->file('cv');
+            $cvPath = $cv->store('cv_lamaran', 'public');
+        }
+
+        $lowongan = Lowongan::lockForUpdate()->findOrFail($lowongan_id);
+
+        // ✅ Tambahkan pengecekan dan decrement kuota
+        if ($lowongan->jumlah_orang <= 0) {
+            throw new \Exception('Kuota lowongan sudah penuh.');
+        }
+
+        // Cek jika user sudah pernah melamar
+        $sudahMelamar = Lamaran::where('user_id', Auth::id())
+            ->where('lowongan_id', $lowongan->id)
+            ->exists();
+
+        if ($sudahMelamar) {
+            throw new \Exception('Anda sudah melamar ke lowongan ini.');
+        }
+
+        Lamaran::create([
+            'lowongan_id' => $lowongan_id,
+            'user_id' => Auth::id(),
+            'nama' => $request->nama,
+            'telepon' => $request->telepon,
+            'cv_path' => $cvPath,
+            'status' => 'menunggu',
         ]);
 
-        DB::beginTransaction();
-        try {
-            $cvPath = null;
+        $lowongan->decrement('jumlah_orang');
 
-            if ($request->hasFile('cv')) {
-                $cv = $request->file('cv');
-                $cvPath = $cv->store('cv_lamaran', 'public');
-            }
+        DB::commit();
 
-            Lamaran::create([
-                'lowongan_id' => $lowongan_id,
-                'user_id' => Auth::id(),
-                'nama' => $request->nama,
-                'telepon' => $request->telepon,
-                'cv_path' => $cvPath,
-            ]);
+        return redirect()->route('lihat.lamaran')->with('success', 'Lamaran berhasil dikirim.');
+    } catch (\Exception $e) {
+        DB::rollBack();
 
-            DB::commit();
-
-            return redirect()->route('lihat.lamaran')->with('success', 'Lamaran berhasil dikirim.');
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            // Hapus file jika sudah sempat terupload
-            if (isset($cvPath)) {
-                Storage::disk('public')->delete($cvPath);
-            }
-
-            return back()->withErrors(['message' => 'Gagal mengirim lamaran: ' . $e->getMessage()]);
+        if (isset($cvPath)) {
+            Storage::disk('public')->delete($cvPath);
         }
+
+        return back()->withErrors(['message' => 'Gagal mengirim lamaran: ' . $e->getMessage()]);
     }
+}
 
     public function tampilSemuaLamaran()
     {
@@ -113,5 +170,48 @@ class Dashboard extends Controller
         $totalPelamar = Lamaran::whereIn('lowongan_id', $lowonganIds)->count();
 
         return view('perusahaan.dashboard-perusahaan', compact('totalPelamar'));
+
     }
+
+public function lamarJob(Request $request)
+{
+    $request->validate([
+        'lowongan_id' => 'required|exists:lowongans,id',
+    ]);
+
+    try {
+        DB::transaction(function () use ($request) {
+            $lowongan = Lowongan::lockForUpdate()->findOrFail($request->lowongan_id);
+
+            // Cek kuota
+            if ($lowongan->jumlah_orang <= 0) {
+                abort(400, 'Kuota lowongan sudah penuh.');
+            }
+
+            // Cek apakah user sudah melamar
+            $sudahMelamar = Lamaran::where('user_id', Auth::id())
+                ->where('lowongan_id', $lowongan->id)
+                ->exists();
+
+            if ($sudahMelamar) {
+                abort(400, 'Anda sudah melamar ke lowongan ini.');
+            }
+
+            // Simpan lamaran
+            Lamaran::create([
+                'user_id' => Auth::id(),
+                'lowongan_id' => $lowongan->id,
+                'status' => 'menunggu',
+            ]);
+
+            // Kurangi kuota
+            $lowongan->decrement('jumlah_orang');
+        });
+
+        return redirect()->back()->with('success', 'Lamaran berhasil dikirim!');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Gagal melamar: ' . $e->getMessage());
+    }
+}
+
 }

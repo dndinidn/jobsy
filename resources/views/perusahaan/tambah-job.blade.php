@@ -22,6 +22,11 @@
             <label for="title">Judul Pekerjaan</label>
             <input type="text" name="title" class="form-control" required>
         </div>
+       <div class="form-group">
+    <label for="jumlah_orang">Jumlah Orang yang Dibutuhkan</label>
+    <input type="number" name="jumlah_orang" class="form-control" min="1" required>
+</div>
+
 
     <div class="form-group">
     <label for="location_id">Lokasi</label>

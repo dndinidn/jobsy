@@ -16,8 +16,9 @@
                 <th>Tipe</th>
                 <th>Gaji</th>
                 <th>Kategori</th>
+                <th>Sisa Kuota</th> {{-- Kolom baru --}}
                 <th>Diposting</th>
-                <th>Aksi</th> {{-- Kolom baru --}}
+                <th>Aksi</th> {{-- Kolom aksi --}}
             </tr>
         </thead>
         <tbody>
@@ -27,12 +28,12 @@
                     <td>{{ $lowongan->location }}</td>
                     <td>{{ $lowongan->employment_type }}</td>
                     <td>{{ $lowongan->salary }}</td>
-                   
                     <td>
                         @foreach($lowongan->kategoris as $kategori)
                             <span class="badge bg-primary">{{ $kategori->nama_kategori }}</span>
                         @endforeach
                     </td>
+                    <td>{{ $lowongan->jumlah_orang }}</td> {{-- Menampilkan sisa kuota --}}
                     <td>{{ \Carbon\Carbon::parse($lowongan->posted_at)->format('d M Y') }}</td>
                     <td>
                         <a href="{{ route('edit-job', $lowongan->id) }}" class="btn btn-warning btn-sm">Edit</a>

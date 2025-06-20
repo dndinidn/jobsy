@@ -53,7 +53,6 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="mb-5">
-                   
                     <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Job Description</h3>
                     <p>{{ $job->description }}</p>
                 </div>
@@ -67,6 +66,7 @@
                         <li class="mb-2"><strong class="text-black">Employment Status:</strong> {{ $job->employment_type }}</li>
                         <li class="mb-2"><strong class="text-black">Job Location:</strong> {{ $job->location->name ?? $job->location }}</li>
                         <li class="mb-2"><strong class="text-black">Salary:</strong> {{ $job->salary }}</li>
+                        <li class="mb-2"><strong class="text-black">Sisa Kuota:</strong> {{ $job->jumlah_orang }}</li>
                         <li class="mb-2"><strong class="text-black">Categories:</strong>
                             @if ($job->kategoris && count($job->kategoris) > 0)
                                 @foreach($job->kategoris as $kategori)

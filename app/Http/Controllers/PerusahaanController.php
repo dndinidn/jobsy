@@ -46,6 +46,7 @@ class PerusahaanController extends Controller
             'employment_type' => 'required|in:Full-time,Part-time',
             'description' => 'required',
             'salary' => 'required|string|max:255',
+            'jumlah_orang' => 'required|integer|min:1',
             'kategori_id' => 'required|array',
             'kategori_id.*' => 'exists:kategoris,id',
         ]);
@@ -61,6 +62,7 @@ class PerusahaanController extends Controller
                 'employment_type' => $validated['employment_type'],
                 'description' => $validated['description'],
                 'salary' => $validated['salary'],
+                'jumlah_orang' => $validated['jumlah_orang'],
                 'posted_at' => now(),
             ]);
 
@@ -159,5 +161,42 @@ class PerusahaanController extends Controller
         $lamaran->save();
 
         return redirect()->back()->with('success', 'Status lamaran berhasil diperbarui.');
+    }
+
+    public function lamarJob(Request $request)
+    {
+        $request->validate([
+            'lowongan_id' => 'required|exists:lowongans,id',
+        ]);
+
+        try {
+            DB::transaction(function () use ($request) {
+                $lowongan = Lowongan::lockForUpdate()->findOrFail($request->lowongan_id);
+
+                if ($lowongan->jumlah_orang <= 0) {
+                    abort(400, 'Kuota lowongan sudah penuh.');
+                }
+
+                $sudahMelamar = Lamaran::where('user_id', Auth::id())
+                    ->where('lowongan_id', $lowongan->id)
+                    ->exists();
+
+                if ($sudahMelamar) {
+                    abort(400, 'Anda sudah melamar ke lowongan ini.');
+                }
+
+                Lamaran::create([
+                    'user_id' => Auth::id(),
+                    'lowongan_id' => $lowongan->id,
+                    'status' => 'menunggu',
+                ]);
+
+                $lowongan->decrement('jumlah_orang');
+            });
+
+            return redirect()->back()->with('success', 'Lamaran berhasil dikirim!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal melamar: ' . $e->getMessage());
+        }
     }
 }

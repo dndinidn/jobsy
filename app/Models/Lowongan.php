@@ -20,7 +20,7 @@ class Lowongan extends Model
         'employment_type',
         'description',
         'salary',
-
+          'jumlah_orang',
         'posted_at',
     ];
     public function location()
