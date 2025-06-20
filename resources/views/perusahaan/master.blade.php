@@ -37,7 +37,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-        
+
 
             <!-- Job -->
             <li class="nav-item">
@@ -50,7 +50,7 @@
                         <a class="collapse-item" href="{{ route('lihat-job') }}">Lihat Job</a>
                         <a class="collapse-item" href="{{ route('tambah-job') }}">Tambah Job</a>
                         <a class="collapse-item" href="{{ route('perusahaan.status-job') }}">Status Pelamar</a>
-                        <a class="collapse-item" href="#">Pelamar Diterima</a>
+                        {{-- <a class="collapse-item" href="#">Pelamar Diterima</a> --}}
                     </div>
                 </div>
             </li>

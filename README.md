@@ -19,14 +19,14 @@
 
 -   Registrasi & Login
 -   Upload CV
--   Mencari pekerjaan berdasarkan kata kunci, kategori, dan lokasi
+-   Mencari pekerjaan 
 -   Melihat detail, melamar pekerjaan, dan status lamaran
 
 ### 🏢 Perusahaan
 
 -   Registrasi & Login
--   Membuat, mengedit, menghapus lowongan pekerjaan
--   Melihat daftar pelamar, CV, dan profil pencari kerja
+-   Membuat, melihat, mengedit, menghapus lowongan pekerjaan
+-   Melihat daftar pelamar dan CV
 -   Menerima atau menolak lamaran
 
 ### 🛠️ Admin
@@ -34,7 +34,7 @@
 -   Login
 -   Mengelola akun pengguna (pencari kerja & perusahaan)
 -   Mengelola kategori pekerjaan
--   Mengelola lokasi (kota)
+
 
 ---
 

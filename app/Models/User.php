@@ -1,13 +1,17 @@
 <?php
 
 namespace App\Models;
-use App\Models\Profil;
+
+use App\Models\profile;
 use App\Http\Controllers\AuthController;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property \App\Models\Profile|null $profile
+ */
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -51,13 +55,12 @@ class User extends Authenticatable
         ];
     }
     public function lamarans()
-{
-    return $this->hasMany(Lamaran::class);
-}
+    {
+        return $this->hasMany(Lamaran::class);
+    }
 
     public function profile()
-{
-    return $this->hasOne(Profile::class);
-}
-
+    {
+        return $this->hasOne(Profile::class);
+    }
 }
